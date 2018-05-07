@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_list"
+            android:icon="@mipmap/ic_menu_list"
+            android:title="@string/mn_list_menu_masternodes" />
+        <item
+            android:id="@+id/nav_add_list"
+            android:icon="@mipmap/ic_menu_list_add"
+            android:title="@string/mn_list_menu_add_masternodes" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@mipmap/ic_menu_settings"
+            android:title="@string/mn_list_menu_settings" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@mipmap/ic_menu_info"
+            android:title="@string/mn_list_menu_about" />
+    </group>
+
+</menu>

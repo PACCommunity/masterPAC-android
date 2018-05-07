@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/item_background"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/ip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_weight="1"
+        android:fontFamily="@font/karla_bold"
+        android:text="192.168.16.42"
+        android:textColor="@color/pacBlack"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_weight="4.5">
+
+        <LinearLayout
+            android:id="@+id/checkbox_background"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="6dp"
+            android:alpha="0"
+            android:background="@drawable/cb_selector"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false" />
+    </RelativeLayout>
+
+    <!--<CheckBox-->
+    <!--android:id="@+id/checkbox"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="@dimen/text_margin"-->
+    <!--android:checked="false"-->
+    <!--android:layout_weight="5"-->
+    <!--/>-->
+</LinearLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pacLightGrey"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:fontFamily="@font/karla_regular"
+        android:gravity="center"
+        android:text="@string/mn_add_alias_description"
+        android:textSize="18sp" />
+
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/list_add_alias"
+        android:name="com.pac.masternodeapp.View.MasternodesAddAliasListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="com.pac.masternodeapp.View.MasternodesAddAliasListFragment"
+        tools:listitem="@layout/fragment_masternodes_add_alias_item" />
+
+    <Button
+        android:id="@+id/done_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="3"
+        android:backgroundTint="@color/pacYellowLight"
+        android:fontFamily="@font/karla_bold"
+        android:text="@string/mn_add_button_done" />
+</LinearLayout>
+

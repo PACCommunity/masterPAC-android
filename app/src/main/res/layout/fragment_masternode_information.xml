@@ -1,0 +1,236 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.pac.masternodeapp.View.MasternodeInformationFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginEnd="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/mn_information_mainLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/karla_regular"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/mn_information_title_alias"
+                    android:textAlignment="textStart"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ViewSwitcher
+                        android:id="@+id/mn_information_view_switcher"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/mn_information_alias_body"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/karla_bold"
+                            android:paddingBottom="8dp"
+                            android:paddingTop="4dp"
+                            android:text="@string/mn_information_title_alias"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/pacBlackMix"
+                            android:textSize="34sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/mn_information_alias_body_edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/karla_bold"
+                            android:hint="@string/mn_information_edit_alias"
+                            android:inputType="text"
+                            android:paddingBottom="8dp"
+                            android:paddingTop="4dp"
+                            android:text="@string/mn_information_title_alias"
+                            android:imeOptions="actionDone"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/pacBlackMix"
+                            android:textSize="34sp"
+                            android:textStyle="bold" />
+
+                    </ViewSwitcher>
+
+                    <ImageButton
+                        android:id="@+id/mn_information_btn_edit_alias"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right"
+                        android:background="@color/transparent"
+                        android:padding="50dp"
+                        android:src="@mipmap/ic_clear_edit_2" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/karla_regular"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/mn_information_title_ip_address"
+                    android:textAlignment="textStart"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mn_information_ip_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/karla_bold"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="4dp"
+                    android:text="@string/mn_information_title_ip_address"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/pacBlackMix"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/karla_regular"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/mn_information_title_status"
+                    android:textAlignment="textStart"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mn_information_status_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/karla_bold"
+                    android:inputType=""
+                    android:paddingBottom="8dp"
+                    android:paddingTop="4dp"
+                    android:text="@string/mn_information_title_status"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/pacBlackMix"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/karla_regular"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/mn_information_title_reward_status"
+                    android:textAlignment="textStart"
+                    android:visibility="gone"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mn_information_reward_status_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/karla_bold"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="4dp"
+                    android:text="@string/mn_information_title_reward_status"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/pacBlackMix"
+                    android:visibility="gone"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/karla_regular"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/mn_information_title_payment_queue"
+                    android:textAlignment="textStart"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mn_information_rank_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/karla_bold"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="4dp"
+                    android:text="@string/mn_information_title_payment_queue"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/pacBlackMix"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/karla_regular"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/mn_information_title_current_balance"
+                    android:textAlignment="textStart"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mn_information_total_rewards_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/karla_bold"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="4dp"
+                    android:text="@string/mn_information_title_current_balance"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/pacBlackMix"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+        </TableRow>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_weight="5">
+
+        <Button
+            android:id="@+id/mn_information_btn_remove"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:backgroundTint="@color/pacBlackMix"
+            android:fontFamily="@font/karla_bold"
+            android:text="@string/mn_information_button_remove"
+            android:textAlignment="center"
+            android:textColor="@color/pacWhiteMix"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

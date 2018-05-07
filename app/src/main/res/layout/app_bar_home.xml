@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pac.masternodeapp.View.HomeActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/karla_bold"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:itemIconTint="@color/pacYellow">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:fontFamily="@font/karla_bold"
+                app:popupTheme="@style/AppTheme.AppBarOverlay"
+                app:theme="@style/MyActionBarTheme">
+
+            </android.support.v7.widget.Toolbar>
+
+            <ImageView
+                android:id="@+id/nav_bar_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:padding="4dp"
+                android:contentDescription="@string/content_description_pac_icon"
+                android:src="@mipmap/ic_pac_logo" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/search_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/pacWhite"
+                android:fontFamily="@font/karla_bold"
+                android:visibility="gone"
+                app:collapseIcon="@mipmap/ic_arrow_back"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:titleTextColor="@color/pacBlack" />
+
+        </RelativeLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_home" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/home_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:fontFamily="@font/karla_regular"
+        app:srcCompat="@mipmap/ic_add_black" />
+
+</android.support.design.widget.CoordinatorLayout>

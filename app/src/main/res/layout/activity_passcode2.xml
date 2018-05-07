@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/passcode_background"
+    android:orientation="vertical"
+    tools:context="com.pac.masternodeapp.View.PasscodeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+
+        <ImageView
+            android:id="@+id/passcode_img_pac_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="60dp"
+            android:contentDescription="@string/img_pac_icon"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/mn_passcode_pin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/mn_passcode_enter_pin"
+            android:textColor="@color/pacWhiteMix"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:id="@+id/passcode_circle_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:id="@+id/passcode_circle_one"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:contentDescription="@string/img_passcode_circle"
+                android:src="@mipmap/ic_circle_white" />
+
+            <ImageView
+                android:id="@+id/passcode_circle_two"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:contentDescription="@string/img_passcode_circle"
+                android:src="@mipmap/ic_circle_white" />
+
+            <ImageView
+                android:id="@+id/passcode_circle_three"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:contentDescription="@string/img_passcode_circle"
+                android:src="@mipmap/ic_circle_white" />
+
+            <ImageView
+                android:id="@+id/passcode_circle_four"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:contentDescription="@string/img_passcode_circle"
+                android:src="@mipmap/ic_circle_white" />
+
+            <ImageView
+                android:id="@+id/passcode_circle_five"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:contentDescription="@string/img_passcode_circle"
+                android:src="@mipmap/ic_circle_white" />
+
+            <ImageView
+                android:id="@+id/passcode_circle_six"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:contentDescription="@string/img_passcode_circle"
+                android:src="@mipmap/ic_circle_white" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:paddingTop="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/passcode_btn_one"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0.25dp"
+                android:layout_marginEnd="0.25dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style"
+                android:text="@string/mn_passcode_button_one"
+                android:textAlignment="center"
+                android:textColor="@color/pacWhite"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/passcode_btn_two"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0.25dp"
+                android:layout_marginEnd="0.25dp"
+                android:layout_marginStart="0.25dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style"
+                android:text="@string/mn_passcode_button_two"
+                android:textColor="@color/pacWhite"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/passcode_btn_three"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0.25dp"
+                android:layout_marginStart="0.25dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style"
+                android:text="@string/mn_passcode_button_three"
+                android:textColor="@color/pacWhite"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/passcode_btn_four"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0.25dp"
+                android:layout_marginEnd="0.25dp"
+                android:layout_marginTop="0.25dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style"
+                android:text="@string/mn_passcode_button_four"
+                android:textColor="@color/pacWhite"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/passcode_btn_five"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0.25dp"
+                android:layout_marginEnd="0.25dp"
+                android:layout_marginStart="0.25dp"
+                android:layout_marginTop="0.25dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style"
+                android:text="@string/mn_passcode_button_five"
+                android:textColor="@color/pacWhite"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/passcode_btn_six"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0.25dp"
+                android:layout_marginStart="0.25dp"
+                android:layout_marginTop="0.25dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style"
+                android:text="@string/mn_passcode_button_six"
+                android:textColor="@color/pacWhite"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/passcode_btn_seven"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0.5dp"
+                android:layout_marginEnd="0.25dp"
+                android:layout_marginTop="0.25dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style"
+                android:text="@string/mn_passcode_button_seven"
+                android:textColor="@color/pacWhite"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/passcode_btn_eight"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0.25dp"
+                android:layout_marginEnd="0.25dp"
+                android:layout_marginStart="0.25dp"
+                android:layout_marginTop="0.25dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style"
+                android:text="@string/mn_passcode_button_eight"
+                android:textColor="@color/pacWhite"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/passcode_btn_nine"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0.25dp"
+                android:layout_marginStart="0.25dp"
+                android:layout_marginTop="0.25dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style"
+                android:text="@string/mn_passcode_button_nine"
+                android:textColor="@color/pacWhite"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/passcode_btn_blank"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0.25dp"
+                android:layout_marginEnd="0.25dp"
+                android:layout_marginTop="0.25dp"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:enabled="false"
+                android:textColor="@color/pacWhite"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/passcode_btn_zero"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0.25dp"
+                android:layout_marginEnd="0.25dp"
+                android:layout_marginStart="0.25dp"
+                android:layout_marginTop="0.25dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style"
+                android:text="@string/mn_passcode_button_zero"
+                android:textColor="@color/pacWhite"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/passcode_btn_clear"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0.25dp"
+                android:layout_marginStart="0.25dp"
+                android:layout_marginTop="0.25dp"
+                android:layout_weight="1"
+                android:background="@drawable/ripple_effect"
+                android:src="@mipmap/ic_clear_white"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

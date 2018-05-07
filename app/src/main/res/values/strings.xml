@@ -1,0 +1,215 @@
+<resources>
+    <string name="app_name">$PAC Masternodes</string>
+
+    <!-- Masternode Passcode screen -->
+    <string name="mn_passcode_button_one">1</string>
+    <string name="mn_passcode_button_two">2</string>
+    <string name="mn_passcode_button_three">3</string>
+    <string name="mn_passcode_button_four">4</string>
+    <string name="mn_passcode_button_five">5</string>
+    <string name="mn_passcode_button_six">6</string>
+    <string name="mn_passcode_button_seven">7</string>
+    <string name="mn_passcode_button_eight">8</string>
+    <string name="mn_passcode_button_nine">9</string>
+    <string name="mn_passcode_button_zero">0</string>
+    <string name="mn_passcode_locked">Locked</string>
+    <string name="mn_passcode_alpha_two">ABC</string>
+    <string name="mn_passcode_alpha_three">DEF</string>
+    <string name="mn_passcode_alpha_four">GHI</string>
+    <string name="mn_passcode_alpha_five">JKL</string>
+    <string name="mn_passcode_alpha_six">MNO</string>
+    <string name="mn_passcode_alpha_seven">PQRS</string>
+    <string name="mn_passcode_alpha_eight">TUV</string>
+    <string name="mn_passcode_alpha_nine">WXYZ</string>
+    <string name="mn_passcode_try_again">Try Again</string>
+    <string name="mn_passcode_enter_pin">Enter PIN</string>
+
+    <!-- List Masternodes screen -->
+    <string name="mn_list_menu_lock">Lock</string>
+    <string name="mn_list_menu_masternodes">Masternodes</string>
+    <string name="mn_list_menu_add_masternodes">Add Masternodes</string>
+    <string name="mn_list_menu_settings">Settings</string>
+    <string name="mn_list_menu_about">About</string>
+    <string name="mn_list_filter">Filter</string>
+    <string name="mn_list_total">%1$d Total</string>
+
+    <!--Masternode Information screen -->
+    <string name="mn_information_title_header">Masternode Information</string>
+    <string name="mn_information_title_status">Status:</string>
+
+    <string name="mn_information_title_ip_address">IP address:</string>
+    <string name="mn_information_title_alias">Alias:</string>
+    <string name="mn_information_title_reward_status">Reward status:</string>
+    <string name="mn_information_title_payment_queue">Payment queue:</string>
+    <string name="mn_information_title_current_balance">Current balance:</string>
+    <string name="mn_information_button_remove">Remove Masternode</string>
+    <string name="mn_information_edit_alias">Masternode Alias</string>
+
+    <!-- Add Masternode List Screen -->
+    <string name="mn_list_add_filter">Filter by IP or TXID</string>
+    <string name="mn_list_add_total_results">%1$d results</string>
+
+    <!--Selected Masternodes Screen -->
+    <string name="mn_add_header">Selected Masternodes</string>
+    <string name="mn_add_alias_placeholder">Masternode alias (optional)</string>
+    <string name="mn_add_alias_placeholder_no_optional">Masternode alias</string>
+    <string name="mn_add_button_done">Done</string>
+    <string name="mn_add_popup_title">Add Masternodes</string>
+    <string name="mn_add_single_popup_title">Add Masternode</string>
+    <string name="mn_add_alias_description">You can optionally give an alias to each Masternode.</string>
+    <string name="mn_add_alias_description_single">You can optionally give an alias to the Masternode.</string>
+
+    <!--Masternode Settings Screen-->
+    <string name="mn_settings_header">Settings</string>
+    <string name="mn_settings_night_mode">Night mode</string>
+    <string name="mn_settings_reset_passcode">Reset passcode</string>
+    <string name="mn_settings_category_title">Security</string>
+    <string name="mn_settings_use_passcode">Use Passcode</string>
+    <string name="mn_settings_security_set_passcode">Set passcode</string>
+    <string name="mn_settings_security_change_passcode">Change passcode</string>
+    <!--<string name="mn_settings_passcode_active"></string>-->
+    <string name="mn_settings_passcode_not_active">Passcode removed</string>
+
+    <!-- Masternode About Screen -->
+    <string name="mn_about_app_version">App version</string>
+    <string name="mn_about_app_version_number">1.3</string>
+    <!--<string name="mn_about_app_web_page">https://paccoin.net/</string>-->
+    <string name="mn_about_app_web_page_link">paccoin.net</string>
+    <string name="mn_about_app_web_page"> <a href="https://paccoin.net">$PAC Website:</a></string>
+
+    <!--Common -->
+    <string name="mn_common_delete">Remove</string>
+    <string name="mn_common_confirm">Confirm</string>
+    <string name="mn_common_cancel">Cancel</string>
+    <string name="title_activity_home">Masternodes</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_lock_app">Lock</string>
+
+    <!--Description -->
+    <string name="img_passcode_description">Clear </string>
+    <string name="img_pac_icon">$PAC Icon</string>
+    <string name="img_passcode_circle">Passcode circle</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Alert Dialog -->
+    <string name="dialog_title">"Remove Masternode"</string>
+    <string name="dialog_body">Are you sure you wish to remove this Masternode from the list?</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_confirm">Confirm</string>
+
+    <!--Add MN Alert Dialog-->
+    <string name="dialog_add_mn_title">Add Masternode</string>
+    <string name="dialog_button_add">Add</string>
+    <string name="nav_bar_search">Search</string>
+
+    <!--Content Description-->
+    <string name="content_description_pac_logo">$PAC Logo</string>
+    <string name="content_description_pac_icon">$PAC Icon</string>
+
+    <!--Error messages-->
+    <string name="mn_get_list_error">There was problem fetching the Masternode List.</string>
+    <string name="mn_get_list_error_empty">No masternodes added.</string>
+    <string name="mns_add_error">Error adding masternodes. Try again later.</string>
+    <string name="mn_add_error">Error adding masternode. Try again later.</string>
+    <string name="mn_update_error">Connection Error. Last updated: %1$s</string>
+    <string name="mn_remove_error">Error removing masternode: %1$s</string>
+    <string name="mn_add_empty_error">Select at least one Masternode</string>
+
+    <!--Success messages-->
+    <string name="mn_remove_success">Masternode removed: %1$s</string>
+    <string name="mns_add_success">Masternodes added.</string>
+    <string name="mn_add_success">Masternode added.</string>
+
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="pref_set_pin">Set PIN</string>
+
+    <string name="passcode_error">Please try again</string>
+
+
+    <string name="passcode_confirm_passcode">Confirm PIN</string>
+    <string name="passcode_set">PIN set</string>
+    <string name="passcode_not_set">PIN was not set</string>
+    <string name="passcode_does_not_match">PIN\'s do not match, please try again</string>
+
+    <string name="passcode_cancel_passcode_title">Cancel PIN setup</string>
+    <string name="passcode_cancel_passcode_body">Are you sure you wish to cancel the PIN setup?</string>
+
+</resources>

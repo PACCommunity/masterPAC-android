@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="200dp"
+    android:id="@+id/custom_alert_dialog"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/txtAlertTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:layout_marginStart="0dp"
+            android:gravity="center"
+            android:text="@string/dialog_title"
+            android:fontFamily="@font/karla_bold"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <TextView
+            android:id="@+id/txtAlertBody"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:fontFamily="@font/karla_regular"
+            android:layout_margin="8dp"
+            android:textColor="@color/pacBlack"
+            android:text="@string/dialog_body"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnAlertLeft"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="128dp"
+            android:layout_height="36dp"
+            android:fontFamily="@font/karla_bold"
+            android:textAllCaps="true"
+            android:textSize="14sp"
+            android:text="@string/dialog_button_cancel"/>
+
+        <Button
+            android:id="@+id/btnAlertRight"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="128dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/karla_bold"
+            android:textAllCaps="true"
+            android:textColor="@color/buttonConfirm"
+            android:text="@string/dialog_button_confirm"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

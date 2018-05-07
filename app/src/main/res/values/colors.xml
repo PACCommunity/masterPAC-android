@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#181818</color>
+    <color name="colorPrimaryDark">#252525</color>
+    <color name="colorAccent">#fef000</color>
+    <color name="pacYellow">#fef000</color>
+    <color name="pacYellowLight">#fef03f</color>
+    <color name="pacBlack">#000000</color>
+    <color name="pacGrey">#797979</color>
+    <color name="pacLightGrey">#d9d9d9</color>
+    <color name="transparent">#0000</color>
+    <color name="pacWhite">#ffffff</color>
+    <color name="pacWhiteMix">#dedede</color>
+    <color name="pacBlackMix">#363636</color>
+    <color name="buttonGray">#5A5A5A</color>
+    <color name="buttonConfirm">#FF0B8B42</color>
+    <color name="buttonCancel">#FFFF0400</color>
+</resources>
