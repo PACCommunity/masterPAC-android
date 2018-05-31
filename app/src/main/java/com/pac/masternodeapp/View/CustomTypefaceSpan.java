@@ -5,6 +5,10 @@ import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.text.style.TypefaceSpan;
 
+/**
+ * Created by PACcoin Team on 3/14/2018.
+ */
+
 public class CustomTypefaceSpan extends TypefaceSpan {
 
     private final Typeface newType;

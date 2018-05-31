@@ -5,13 +5,23 @@
     android:orientation="vertical"
     tools:context="com.pac.masternodeapp.View.MasternodeInformationFragment">
 
+    <TextView
+        android:id="@+id/mn_information_last_updated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/karla_regular"
+        android:textAlignment="center"
+        android:textSize="14sp" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:layout_marginEnd="25dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="1">
 
         <TableRow
@@ -65,11 +75,12 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/karla_bold"
                             android:hint="@string/mn_information_edit_alias"
+                            android:imeOptions="actionDone"
                             android:inputType="text"
+                            android:maxLength="25"
                             android:paddingBottom="8dp"
                             android:paddingTop="4dp"
                             android:text="@string/mn_information_title_alias"
-                            android:imeOptions="actionDone"
                             android:textAlignment="textStart"
                             android:textColor="@color/pacBlackMix"
                             android:textSize="34sp"
@@ -142,8 +153,8 @@
                     android:paddingTop="10dp"
                     android:text="@string/mn_information_title_reward_status"
                     android:textAlignment="textStart"
-                    android:visibility="gone"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/mn_information_reward_status_body"
@@ -155,9 +166,9 @@
                     android:text="@string/mn_information_title_reward_status"
                     android:textAlignment="textStart"
                     android:textColor="@color/pacBlackMix"
-                    android:visibility="gone"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -204,8 +215,6 @@
                     android:textColor="@color/pacBlackMix"
                     android:textSize="24sp"
                     android:textStyle="bold" />
-
-
             </LinearLayout>
         </TableRow>
 

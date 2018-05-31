@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swipe_refresh_layout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/pacLightGrey">
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/list"
-        android:name="com.pac.masternodeapp.View.MasternodesListFragment"
+    <TextView
+        android:id="@+id/mn_information_last_updated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/karla_regular"
+        android:textAlignment="center"
+        android:textSize="14sp" />
+
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
-        android:background="@color/pacLightGrey"
-        app:layoutManager="LinearLayoutManager"
-        tools:context="com.pac.masternodeapp.View.MasternodesListFragment"
-        tools:listitem="@layout/fragment_masternodes_item" />
-</android.support.v4.widget.SwipeRefreshLayout>
+        android:background="@color/pacLightGrey">
+
+        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/list"
+            android:name="com.pac.masternodeapp.View.MasternodesListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:background="@color/pacLightGrey"
+            app:layoutManager="LinearLayoutManager"
+            tools:context="com.pac.masternodeapp.View.MasternodesListFragment"
+            tools:listitem="@layout/fragment_masternodes_item" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>
+

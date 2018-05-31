@@ -21,6 +21,10 @@ import com.pac.masternodeapp.R;
 
 import java.util.List;
 
+/**
+ * Created by PACcoin Team on 3/14/2018.
+ */
+
 public class MasternodesAddAliasListFragment extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
     public static final String FRAGMENT_TAG = "add_alias";
@@ -97,13 +101,12 @@ public class MasternodesAddAliasListFragment extends Fragment implements Recycle
         return view;
     }
 
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-
         HomeActivity.actionButton.hide();
     }
 
-    public void onStop(){
+    public void onStop() {
         super.onStop();
 
         if (!(snackbar == null))

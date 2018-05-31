@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by LazyDude9202 Magno6058 on 3/14/2018.
+ * Created by PACcoin Team on 3/14/2018.
  */
 
 public class Masternode {
@@ -20,12 +20,13 @@ public class Masternode {
     private String payee;
     private String activeseconds;
     private String lastseen;
-
     private String rewardStatus;
     private String alias;
     private double balance;
-
     private boolean isChecked;
+    private String lastUpdated;
+    private boolean isInPaymentQueue;
+    private boolean isInPaymentQueueNotification;
 
 
     public String getVin() {
@@ -123,5 +124,29 @@ public class Masternode {
 
     public void setIsChecked(boolean isChecked) {
         this.isChecked = isChecked;
+    }
+
+    public String getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(String lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public boolean isInPaymentQueue() {
+        return isInPaymentQueue;
+    }
+
+    public void setInPaymentQueue(boolean inPaymentQueue) {
+        isInPaymentQueue = inPaymentQueue;
+    }
+
+    public boolean isInPaymentQueueNotification() {
+        return isInPaymentQueueNotification;
+    }
+
+    public void setInPaymentQueueNotification(boolean inPaymentQueueNotification) {
+        isInPaymentQueueNotification = inPaymentQueueNotification;
     }
 }

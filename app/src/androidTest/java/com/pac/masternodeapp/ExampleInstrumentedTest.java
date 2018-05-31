@@ -10,6 +10,11 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
 /**
+ * Created by PACcoin Team on 3/14/2018.
+ */
+
+
+/**
  * Instrumented test, which will execute on an Android device.
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>

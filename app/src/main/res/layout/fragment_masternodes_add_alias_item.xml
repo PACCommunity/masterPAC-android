@@ -8,7 +8,7 @@
         android:id="@+id/view_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/item_background_remove">
 
         <ImageView
@@ -19,30 +19,13 @@
             android:layout_marginRight="20dp"
             android:src="@mipmap/ic_delete_black"/>
 
-        <!--<TextView-->
-            <!--android:gravity="end"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:fontFamily="@font/karla_bold"-->
-            <!--android:text="@string/mn_common_delete"-->
-            <!--android:textColor="@color/pacBlack"-->
-            <!--android:textSize="16sp"-->
-            <!--android:textStyle="bold" -->
-            <!--android:layout_weight="1"/>-->
-
-        <!--<ImageView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="2"-->
-            <!--android:padding="10dp"-->
-            <!--android:src="@mipmap/ic_delete_black"/>-->
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/view_foreground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/item_background"
         android:orientation="vertical">
 
@@ -70,6 +53,7 @@
             android:fontFamily="@font/karla_regular"
             android:hint="@string/mn_add_alias_placeholder_no_optional"
             android:imeOptions="actionDone"
+            android:maxLength="25"
             android:inputType="text"
             android:maxLines="1"
             android:textAppearance="?attr/textAppearanceListItem" />

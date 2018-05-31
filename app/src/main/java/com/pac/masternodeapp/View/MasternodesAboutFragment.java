@@ -17,6 +17,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.pac.masternodeapp.R;
 
+/**
+ * Created by PACcoin Team on 3/14/2018.
+ */
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,6 +75,7 @@ public class MasternodesAboutFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        HomeActivity.main_menu.findItem(R.id.action_search).setVisible(false);
         HomeActivity.actionButton.hide();
 
     }

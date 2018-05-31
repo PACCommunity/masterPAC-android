@@ -19,7 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by LazyDude9202 Magno6058 on 3/14/2018.
+ * Created by PACcoin Team on 3/14/2018.
  */
 
 public class DataParser {

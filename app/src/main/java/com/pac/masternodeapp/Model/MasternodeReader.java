@@ -3,7 +3,7 @@ package com.pac.masternodeapp.Model;
 import android.provider.BaseColumns;
 
 /**
- * Created by LazyDude9202 Magno6058 3/21/2018.
+ * Created by PACcoin Team on 3/14/2018.
  */
 
 public class MasternodeReader {
@@ -25,11 +25,20 @@ public class MasternodeReader {
         public static final String COLUMN_NAME_ALIAS = "alias";
         public static final String COLUMN_NAME_TOTAL_REWARDS = "totalRewards";
         public static final String COLUMN_NAME_IS_CHECKED = "isChecked";
+        public static final String COLUMN_NAME_LAST_UPDATED = "lastUpdated";
+
+        public static final String COLUMN_NAME_IN_PAYMENT_QUEUE = "inPaymentQueue";
+        public static final String COLUMN_NAME_IN_PAYMENT_QUEUE_NOTIFICATION = "inPaymentQueueNotification";
     }
 
     public static class PasscodeEntry implements BaseColumns {
         public static final String TABLE_NAME = "appPasscode";
         public static final String COLUMN_NAME_PASSCODE = "passcode";
+    }
+
+    public static class NetworkEntry implements BaseColumns {
+        public static final String TABLE_NAME = "masternodeNetwork";
+        public static final String COLUMN_NAME_TOTAL_MASTERNODES = "totalMasternodes";
     }
 
 }

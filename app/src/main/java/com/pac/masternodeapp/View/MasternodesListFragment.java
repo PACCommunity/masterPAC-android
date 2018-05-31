@@ -14,10 +14,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.pac.masternodeapp.Controller.DataParser;
 import com.pac.masternodeapp.Controller.RequestController;
 import com.pac.masternodeapp.Controller.SQLiteHandler;
+import com.pac.masternodeapp.Helpers.NotificationHelper;
 import com.pac.masternodeapp.Model.Masternode;
 import com.pac.masternodeapp.Model.SocketCallback;
 import com.pac.masternodeapp.R;
@@ -31,6 +34,10 @@ import java.util.List;
 import static com.pac.masternodeapp.Model.Constants.MASTERNODES_INFO;
 
 /**
+ * Created by PACcoin Team on 3/14/2018.
+ */
+
+/**
  * A fragment representing a list of Items.
  * <p/>
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
@@ -41,11 +48,14 @@ public class MasternodesListFragment extends Fragment {
     public static final String FRAGMENT_TAG = "mn_list";
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String ARG_LAST_UPDATED = "mn_list_last_updated";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private static MasternodesListRecyclerViewAdapter recyclerViewAdapter;
     private static RecyclerView recyclerView;
+    private static List<Masternode> masternodes;
+    private static TextView txtLastUpdated;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -76,6 +86,14 @@ public class MasternodesListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("onResume Get MN Data", "obtaining most recent data");
+        if (checkConnection() && !masternodes.isEmpty())
+            getMaternodes();
+        else if (masternodes.isEmpty())
+            Snackbar.make(getActivity().findViewById(R.id.home_action_button), getResources().getString(R.string.mn_get_list_error_empty), Snackbar.LENGTH_LONG).show();
+        else{
+            Snackbar.make(getActivity().findViewById(R.id.home_action_button), String.format(getResources().getString(R.string.mn_update_error), "date"), Snackbar.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -84,15 +102,20 @@ public class MasternodesListFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_masternodes_list, container, false);
 
         // Set the adapter
-        if (view instanceof SwipeRefreshLayout) {
+        if (view instanceof LinearLayout) {
             Context context = view.getContext();
+
+            txtLastUpdated = view.findViewById(R.id.mn_information_last_updated);
+
             SQLiteHandler sqLiteHandler = new SQLiteHandler(getContext());
-            final List<Masternode> masternodes = sqLiteHandler.getMasternodes();
+            masternodes = sqLiteHandler.getMasternodes();
+
             recyclerView = (RecyclerView) view.findViewById(R.id.list);
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+
             }
             recyclerViewAdapter = new MasternodesListRecyclerViewAdapter(!masternodes.isEmpty() ? masternodes : Masternode.EmptyList, mListener);
             recyclerView.setAdapter(recyclerViewAdapter);
@@ -109,38 +132,46 @@ public class MasternodesListFragment extends Fragment {
                 }
             });
 
-            ((SwipeRefreshLayout) view).setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            ((SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout)).setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    if (checkConnection() && !masternodes.isEmpty())
+                    if (checkConnection() && !masternodes.isEmpty()) {
                         getMaternodes();
-                    else if (checkConnection() && masternodes.isEmpty()) {
+                        ((SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout)).setRefreshing(false);
+                    }
+                    else if (masternodes.isEmpty()) {
                         Snackbar.make(getActivity().findViewById(R.id.home_action_button), getResources().getString(R.string.mn_get_list_error_empty), Snackbar.LENGTH_LONG).show();
-                        ((SwipeRefreshLayout) view).setRefreshing(false);
+                        ((SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout)).setRefreshing(false);
                     }
                     else{
                         Snackbar.make(getActivity().findViewById(R.id.home_action_button), String.format(getResources().getString(R.string.mn_update_error), "date"), Snackbar.LENGTH_LONG).show();
+                        ((SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout)).setRefreshing(false);
                     }
                 }
             });
 
-            if (checkConnection() && !masternodes.isEmpty())
-                getMaternodes();
-            else if (checkConnection() && masternodes.isEmpty())
-                Snackbar.make(getActivity().findViewById(R.id.home_action_button), getResources().getString(R.string.mn_get_list_error_empty), Snackbar.LENGTH_LONG).show();
-            else{
-                Snackbar.make(getActivity().findViewById(R.id.home_action_button), String.format(getResources().getString(R.string.mn_update_error), "date"), Snackbar.LENGTH_LONG).show();
-            }
+            if (!masternodes.isEmpty())
+                txtLastUpdated.setText(String.format(getResources().getString(R.string.mn_information_last_updated), masternodes.get(0).getLastUpdated()));
         }
+
         return view;
     }
 
     @Override
     public void onStart(){
         super.onStart();
+        if (HomeActivity.menuCreated)
+            HomeActivity.main_menu.findItem(R.id.action_search).setVisible(true);
+        HomeActivity.visibleSearch = true;
         HomeActivity.buttonAction = true;
         HomeActivity.actionButton.setImageResource(R.mipmap.ic_add_black);
         HomeActivity.actionButton.show();
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        HomeActivity.visibleSearch = false;
     }
 
     @Override
@@ -204,7 +235,10 @@ public class MasternodesListFragment extends Fragment {
                 try {
                     JSONObject masternodesJson = new JSONObject(response);
                     JSONArray mnArray = masternodesJson.getJSONArray("result");
-                    PopulateUI((List<Masternode>) dataParser.GetMasternodeList(mnArray));
+                    if (mnArray == null || mnArray.length() == 0)
+                        Snackbar.make(getActivity().findViewById(R.id.home_action_button), getResources().getString(R.string.mn_get_list_error), Snackbar.LENGTH_LONG).show();
+                    else
+                        PopulateUI((List<Masternode>) dataParser.GetMasternodeList(mnArray));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -222,18 +256,30 @@ public class MasternodesListFragment extends Fragment {
             Snackbar.make(getActivity().findViewById(R.id.home_action_button), getResources().getString(R.string.mn_get_list_error), Snackbar.LENGTH_LONG).show();
             return;
         }
+
         SQLiteHandler sqLiteHandler = new SQLiteHandler(getContext());
         List<Masternode> updated = recyclerViewAdapter.SetAliases(masternodesList);
         for (int i = 0; i < updated.size(); i++){
             int updatedRows = sqLiteHandler.updateMasternode(updated.get(i));
             Log.d("Update-" + i, String.valueOf(updatedRows));
         }
+
         List<Masternode> updatedDB = sqLiteHandler.getMasternodes();
         if (!updatedDB.isEmpty())
             recyclerViewAdapter.ReplaceData(updatedDB);
         recyclerViewAdapter.notifyDataSetChanged();
+
+        txtLastUpdated.setText(String.format(getResources().getString(R.string.mn_information_last_updated), updatedDB.get(0).getLastUpdated()));
+
+        for (Masternode item : updatedDB) {
+            if (item.isInPaymentQueue() && !item.isInPaymentQueueNotification()){
+                NotificationHelper.createLocalNotification(getContext(), getResources().getString(R.string.mn_notification_title), getResources().getString(R.string.mn_notification_message));
+                break;
+            }
+        }
+
         try{
-            ((SwipeRefreshLayout) getView()).setRefreshing(false);
+            ((SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh_layout)).setRefreshing(false);
         }
         catch (Exception ex){
             Log.d("Error: ", ex.toString());

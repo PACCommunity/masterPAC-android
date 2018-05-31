@@ -34,9 +34,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static com.pac.masternodeapp.Model.Constants.MASTERNODES_INFO;
 
+/**
+ * Created by PACcoin Team on 3/14/2018.
+ */
 public class MasternodeInformationFragment extends Fragment {
 
     private static final String ARG_VIN = "mn_info_vin";
@@ -51,6 +56,9 @@ public class MasternodeInformationFragment extends Fragment {
     private static final String ARG_ALIAS = "mn_info_alias";
     private static final String ARG_CURRENT_BALANCE = "mn_info_total_rewards";
     private static final String ARG_IS_CHECKED = "mn_info_is_checked";
+    private static final String ARG_LAST_UPDATED = "mn_info_last_updated";
+    private static final String ARG_IN_PAYMENT_QUEUE = "mn_info_in_payment_queue";
+    private static final String ARG_IN_PAYMENT_QUEUE_NOTIFICATION = "mn_info_in_payment_queue_notification";
     private static Masternode masternode;
 
     private Bundle argsMn;
@@ -78,6 +86,7 @@ public class MasternodeInformationFragment extends Fragment {
         DecimalFormat formatter = new DecimalFormat("#,###,###");
         args.putString(ARG_CURRENT_BALANCE, formatter.format(mn.getBalance()));
         args.putBoolean(ARG_IS_CHECKED, mn.getIsChecked());
+        args.putString(ARG_LAST_UPDATED, mn.getLastUpdated());
 
         fragment.setArguments(args);
         return fragment;
@@ -102,6 +111,7 @@ public class MasternodeInformationFragment extends Fragment {
         final TextView txtRewardStatus = infoView.findViewById(R.id.mn_information_reward_status_body);
         final TextView txtPaymentPosition = infoView.findViewById(R.id.mn_information_rank_body);
         final TextView txtBalance = infoView.findViewById(R.id.mn_information_total_rewards_body);
+        final TextView txtLastUpdated = infoView.findViewById(R.id.mn_information_last_updated);
 
         final EditText edtChangeAlias = infoView.findViewById(R.id.mn_information_alias_body_edit);
         edtChangeAlias.setSelection(edtChangeAlias.getText().length());
@@ -118,7 +128,6 @@ public class MasternodeInformationFragment extends Fragment {
 
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.dialog_title)
-//                .setCustomTitle(txtAlertTitle)
                 .setMessage(R.string.dialog_body)
                 .setPositiveButton(R.string.dialog_button_confirm, new DialogInterface.OnClickListener() {
                     @Override
@@ -164,10 +173,11 @@ public class MasternodeInformationFragment extends Fragment {
                     switcher.showNext();
                     edtChangeAlias.setText(txtAlias.getText());
                     edtChangeAlias.requestFocus();
+                    btnEdit.setImageResource(R.mipmap.ic_check_black);
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
                 } else {
-                    if (!edtChangeAlias.getText().equals(masternode.getAlias())){
+                    if (!edtChangeAlias.getText().equals(masternode.getAlias())) {
                         masternode.setAlias(edtChangeAlias.getText().toString());
                         SQLiteHandler sqLiteHandler = new SQLiteHandler(getContext());
                         sqLiteHandler.updateMasternode(masternode);
@@ -176,6 +186,7 @@ public class MasternodeInformationFragment extends Fragment {
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
                     switcher.showPrevious();
+                    btnEdit.setImageResource(R.mipmap.ic_clear_edit_2);
                 }
 
             }
@@ -194,12 +205,7 @@ public class MasternodeInformationFragment extends Fragment {
         txtRewardStatus.setText(argsMn.getString(ARG_REWARD_STATUS));
         txtPaymentPosition.setText(argsMn.getString(ARG_PAYMENT_POSITION));
         txtBalance.setText(argsMn.getString(ARG_CURRENT_BALANCE + " $PAC"));
-
-        if (checkConnection())
-            getMasternodeInfo();
-        else{
-            Snackbar.make(getActivity().findViewById(R.id.home_action_button), String.format(getResources().getString(R.string.mn_update_error), "date"), Snackbar.LENGTH_LONG).show();
-        }
+        txtLastUpdated.setText(argsMn.getString(ARG_LAST_UPDATED));
 
         return infoView;
     }
@@ -207,7 +213,19 @@ public class MasternodeInformationFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        HomeActivity.main_menu.findItem(R.id.action_search).setVisible(false);
         HomeActivity.actionButton.hide();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (checkConnection())
+            getMasternodeInfo();
+        else {
+            Snackbar.make(getActivity().findViewById(R.id.home_action_button), String.format(getResources().getString(R.string.mn_update_error), argsMn.getString(ARG_LAST_UPDATED)), Snackbar.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -226,10 +244,10 @@ public class MasternodeInformationFragment extends Fragment {
         super.onDetach();
     }
 
-    private boolean checkConnection(){
+    private boolean checkConnection() {
         ConnectivityManager ConnectionManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = ConnectionManager.getActiveNetworkInfo();
-        if(networkInfo != null && networkInfo.isConnected()==true )
+        if (networkInfo != null && networkInfo.isConnected() == true)
             return true;
         else
             return false;
@@ -245,7 +263,10 @@ public class MasternodeInformationFragment extends Fragment {
                 try {
                     JSONObject masternodesJson = new JSONObject(response);
                     JSONArray mnArray = masternodesJson.getJSONArray("result");
-                    populateUI(dataParser.GetMasternode(mnArray));
+                    if (mnArray == null || mnArray.length() == 0)
+                        Snackbar.make(getActivity().findViewById(R.id.home_action_button), getResources().getString(R.string.mn_get_info_error), Snackbar.LENGTH_LONG).show();
+                    else
+                        PopulateUI(dataParser.GetMasternode(mnArray));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -256,16 +277,19 @@ public class MasternodeInformationFragment extends Fragment {
         requestController.execute(request);
     }
 
-    private void populateUI(Masternode mn){
+    private void PopulateUI(Masternode mn) {
         if (!this.isVisible())
             return;
-        try{
+        try {
+            SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = new Date();
             final TextView txtAlias = getView().findViewById(R.id.mn_information_alias_body);
             final TextView txtIP = getView().findViewById(R.id.mn_information_ip_body);
             final TextView txtStatus = getView().findViewById(R.id.mn_information_status_body);
             final TextView txtRewardStatus = getView().findViewById(R.id.mn_information_reward_status_body);
             final TextView txtPaymentPosition = getView().findViewById(R.id.mn_information_rank_body);
             final TextView txtBalance = getView().findViewById(R.id.mn_information_total_rewards_body);
+            final TextView txtLastUpdated = getView().findViewById(R.id.mn_information_last_updated);
 
             txtAlias.setText(argsMn.getString(ARG_ALIAS));
             txtIP.setText(mn.getIp());
@@ -274,8 +298,11 @@ public class MasternodeInformationFragment extends Fragment {
             txtPaymentPosition.setText(String.valueOf(mn.getRank()));
             DecimalFormat formatter = new DecimalFormat("#,###,###");
             txtBalance.setText(formatter.format(mn.getBalance()) + " $PAC");
-        }
-        catch (Exception ex){
+            txtLastUpdated.setText(String.format(
+                    getResources().getString(R.string.mn_information_last_updated),
+                    dateTimeFormatter.format(date)));
+
+        } catch (Exception ex) {
             Log.d("Error: ", ex.toString());
         }
     }

@@ -33,4 +33,9 @@
     <style name="PreferenceScreen" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColor">@color/pacBlack</item>
     </style>
+
+    <style name="FingerprintDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:background">@drawable/fingerprint_dialog_background</item>
+        <item name="android:windowFrame">@null</item>
+    </style>
 </resources>

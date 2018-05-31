@@ -13,6 +13,15 @@
             android:dependency="passcode_preference"
             android:key="@string/pref_set_pin"
             android:title="@string/pref_set_pin" />
+
+        <SwitchPreference
+            android:dependency="passcode_preference"
+            android:enabled="false"
+            android:fontFamily="@font/karla_regular"
+            android:key="fingerprint_preference"
+            android:textColor="@color/pacBlack"
+            android:title="@string/mn_settings_use_fingerprint">
+        </SwitchPreference>
     </PreferenceCategory>
 
     <!--<PreferenceCategory--><!--android:title="@string/inline_preferences">-->

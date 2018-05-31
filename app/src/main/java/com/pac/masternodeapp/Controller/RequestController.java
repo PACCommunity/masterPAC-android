@@ -3,6 +3,7 @@ package com.pac.masternodeapp.Controller;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.pac.masternodeapp.Model.Constants;
 import com.pac.masternodeapp.Model.SocketCallback;
 
 import org.json.JSONException;
@@ -18,7 +19,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 /**
- * Created by LazyDude9202 Magno6058 on 3/14/2018.
+ * Created by PACcoin Team on 3/14/2018.
  */
 
 public class RequestController extends AsyncTask<String, Void, String> {
@@ -35,9 +36,42 @@ public class RequestController extends AsyncTask<String, Void, String> {
         String noReset = "Could not reset.";
         String reset = "The server has been reset.";
 
+        String urlServer = "";
+
         try {
-            Socket socket = new Socket(InetAddress.getByName("electro-pac.paccoin.io"), 50001);
-            String request = BuildMethod(method);
+
+            Socket socket = createSocket(Constants.SERVER_URL_1, 50001);
+            if (socket  != null && socket.isConnected()) {
+                String request = BuildMethod(method);
+
+                return getRequest(socket, request);
+            } else {
+                socket = createSocket(Constants.SERVER_URL_2, 50001);
+
+                if (socket != null && socket.isConnected()) {
+                    String request = BuildMethod(method);
+
+                    return getRequest(socket, request);
+                }
+            }
+
+
+        } catch (Exception e) {
+            Log.d("Json", noReset);
+            e.printStackTrace();
+            return e.toString();
+        }
+
+        return "";
+    }
+
+    String getRequest(Socket socket, String request) {
+        try {
+            String noReset = "Could not reset.";
+
+            DataInputStream is;
+            DataOutputStream os;
+
             is = new DataInputStream(socket.getInputStream());
             os = new DataOutputStream(socket.getOutputStream());
             PrintWriter pw = new PrintWriter(os);
@@ -54,15 +88,20 @@ public class RequestController extends AsyncTask<String, Void, String> {
             is.close();
             os.close();
             return json.toString();
+        } catch (Exception ex) {
+            return "";
+        }
+    }
 
+    Socket createSocket(String url, int port) {
+        try {
+            Socket socket = new Socket(InetAddress.getByName(url), port);
+
+            return socket;
         } catch (IOException e) {
-            Log.d("Json", noReset);
             e.printStackTrace();
-            return e.toString();
-        } catch (JSONException e) {
-            Log.d("Json", noReset);
-            e.printStackTrace();
-            return e.toString();
+
+            return null;
         }
     }
 

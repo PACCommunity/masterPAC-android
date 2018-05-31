@@ -15,6 +15,10 @@ import com.pac.masternodeapp.View.MasternodesListFragment.OnListFragmentInteract
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by PACcoin Team on 3/14/2018.
+ */
+
 public class MasternodesListRecyclerViewAdapter extends RecyclerView.Adapter<MasternodesListRecyclerViewAdapter.ViewHolder> {
 
     private static List<Masternode> originalData;
@@ -38,13 +42,24 @@ public class MasternodesListRecyclerViewAdapter extends RecyclerView.Adapter<Mas
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mAliasView.setText(mValues.get(position).getAlias());
+
         String status = mValues.get(position).getStatus();
+        String alias = mValues.get(position).getAlias();
+        boolean inPaymentQueue = mValues.get(position).isInPaymentQueue();
+        boolean inPaymentQueueNotification = mValues.get(position).isInPaymentQueueNotification();
+
+
         holder.mStatusView.setText(status);
         holder.mRankView.setText(String.valueOf(mValues.get(position).getRank()));
 
-        switch (status){
+
+        switch (status) {
             case "ENABLED":
-                holder.mColorView.setImageResource(R.mipmap.ic_green);
+                if (inPaymentQueue) {
+                    holder.mColorView.setImageResource(R.mipmap.ic_dollar_round_green);
+                } else {
+                    holder.mColorView.setImageResource(R.mipmap.ic_green);
+                }
                 break;
             case "NEW_START_REQUIRED":
                 holder.mColorView.setImageResource(R.mipmap.ic_yellow);
@@ -93,23 +108,23 @@ public class MasternodesListRecyclerViewAdapter extends RecyclerView.Adapter<Mas
         }
     }
 
-    public void FilterData(String query){
+    public void FilterData(String query) {
         mValues.clear();
-        for (int i = 0; i < originalData.size(); i++){
+        for (int i = 0; i < originalData.size(); i++) {
             if (originalData.get(i).getAlias().toLowerCase().contains(query.toLowerCase())) {
                 mValues.add(originalData.get(i));
             }
         }
     }
 
-    public void RestoreData(){
+    public void RestoreData() {
         mValues.clear();
         mValues = new ArrayList<Masternode>(originalData);
     }
 
-    public String GetPayees(){
+    public String GetPayees() {
         String payees = "";
-        for (int i = 0 ; i < originalData.size() ; i++){
+        for (int i = 0; i < originalData.size(); i++) {
             payees += originalData.get(i).getPayee();
             if (i != originalData.size() - 1)
                 payees += ",";
@@ -117,7 +132,7 @@ public class MasternodesListRecyclerViewAdapter extends RecyclerView.Adapter<Mas
         return payees;
     }
 
-    public List<Masternode> ReplaceData(List<Masternode> masternodeList){
+    public List<Masternode> ReplaceData(List<Masternode> masternodeList) {
         mValues.clear();
         mValues = new ArrayList<Masternode>(masternodeList);
         originalData.clear();
@@ -126,9 +141,9 @@ public class MasternodesListRecyclerViewAdapter extends RecyclerView.Adapter<Mas
         return mValues;
     }
 
-    public List<Masternode> SetAliases(List<Masternode> masternodeList){
-        for (int i = 0; i < masternodeList.size(); i++){
-            for (int j = 0; j < originalData.size(); j++){
+    public List<Masternode> SetAliases(List<Masternode> masternodeList) {
+        for (int i = 0; i < masternodeList.size(); i++) {
+            for (int j = 0; j < originalData.size(); j++) {
                 if (masternodeList.get(i).getPayee().equals(originalData.get(j).getPayee()))
                     masternodeList.get(i).setAlias(originalData.get(j).getAlias());
             }

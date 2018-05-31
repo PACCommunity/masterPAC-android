@@ -7,6 +7,8 @@
     <color name="pacYellowLight">#fef03f</color>
     <color name="pacBlack">#000000</color>
     <color name="pacGrey">#797979</color>
+    <color name="pacGreyTrans">#f0464646</color>
+    <color name="pacTrans">#00797979</color>
     <color name="pacLightGrey">#d9d9d9</color>
     <color name="transparent">#0000</color>
     <color name="pacWhite">#ffffff</color>

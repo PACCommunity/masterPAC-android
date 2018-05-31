@@ -15,6 +15,10 @@ import com.pac.masternodeapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by PACcoin Team on 3/14/2018.
+ */
+
 public class MasternodesAddListRecyclerViewAdapter extends RecyclerView.Adapter<MasternodesAddListRecyclerViewAdapter.ViewHolder> {
 
     private static List<Masternode> mValues;
@@ -59,7 +63,7 @@ public class MasternodesAddListRecyclerViewAdapter extends RecyclerView.Adapter<
                     mValues.get(position).setIsChecked(true);
                 }
                 else {
-                    checkedList.remove(mValues.get(position));
+                    checkedList.remove(position);
                     holder.mCheckBoxBackground.setAlpha(0);
                     mValues.get(position).setIsChecked(false);
                 }

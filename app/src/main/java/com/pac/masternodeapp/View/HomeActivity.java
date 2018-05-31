@@ -21,6 +21,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.support.v4.content.ContextCompat;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -47,9 +48,15 @@ import com.pac.masternodeapp.R;
 import java.lang.reflect.Field;
 import java.util.List;
 
+/**
+ * Created by PACcoin Team on 3/14/2018.
+ */
+
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MasternodesListFragment.OnListFragmentInteractionListener {
 
+    public static boolean menuCreated = false;
+    public static boolean visibleSearch = false;
     public static boolean buttonAction = true;
     public static FloatingActionButton actionButton;
     public static FragmentManager fragmentManager;
@@ -70,6 +77,10 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        final String ADD_MN_INTENT = "android.intent.action.addmn";
+//        final String SETTINGS_MN_INTENT = "android.intent.action.settings";
+
         overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -93,7 +104,8 @@ public class HomeActivity extends AppCompatActivity
         edittext.setMaxLines(1);
         edittext.setClipToOutline(true);
         edittext.setTypeface(regularFont);
-
+        final int maxLength = 25;
+        edittext.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
         container.addView(edittext);
 
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(HomeActivity.this)
@@ -103,7 +115,11 @@ public class HomeActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         List<Masternode> checkedList = MasternodesAddListRecyclerViewAdapter.GetCheckedList();
-                        checkedList.get(0).setAlias(edittext.getText().toString());
+                        String alias = edittext.getText().toString();
+                        if (alias.equals(""))
+                            checkedList.get(0).setAlias(checkedList.get(0).getIp());
+                        else
+                            checkedList.get(0).setAlias(edittext.getText().toString());
 
                         SQLiteHandler sqLiteHandler = new SQLiteHandler(HomeActivity.this);
                         long addedRows = sqLiteHandler.addMasternode(checkedList.get(0));
@@ -141,6 +157,7 @@ public class HomeActivity extends AppCompatActivity
                 addDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTypeface(regularFont);
             }
         });
+
 
         actionButton = findViewById(R.id.home_action_button);
 
@@ -198,6 +215,22 @@ public class HomeActivity extends AppCompatActivity
         changeFragment(listFragment, null);
 
         setSearchToolbar();
+
+//        try {
+//            if (ADD_MN_INTENT.equals(getIntent().getAction())) {
+//                Fragment masternodesAddListFragment = new MasternodesAddListFragment();
+//                allFragment = masternodesAddListFragment.getClass().getName();
+//                changeFragment(masternodesAddListFragment, null);
+//            }
+//            if (SETTINGS_MN_INTENT.equals(getIntent().getAction())) {
+//                Fragment settingsFragmentFragment = new SettingsFragment();
+//                allFragment = settingsFragmentFragment.getClass().getName();
+//                changeFragment(settingsFragmentFragment, null);
+//            }
+//        }
+//        catch (Exception e){
+//            Log.d("INTENT", e.toString());
+//        }
     }
 
     @Override
@@ -209,14 +242,9 @@ public class HomeActivity extends AppCompatActivity
         } else if (searchToolbar.getVisibility() < 4) {
             item_search.collapseActionView();
         } else if (getFragmentManager().getBackStackEntryCount() > 1) {
-
-//            boolean setup = fragmentManager.popBackStackImmediate(passcodeSetup, 0);
-//            if (!setup)
-//                showAlertDialog(getString(R.string.passcode_cancel_passcode_title),
-//                        getString(R.string.passcode_cancel_passcode_body));
-//            else {
+            if (!visibleSearch)
+                main_menu.findItem(R.id.action_search).setVisible(false);
             fragmentManager.popBackStack();
-//            }
         }
     }
 
@@ -224,6 +252,7 @@ public class HomeActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home, menu);
         main_menu = menu;
+        menuCreated = true;
 
         preferences = getSharedPreferences("active_passcode", 0);
         Boolean pinIsActive = preferences.getBoolean("active_passcode", false);
@@ -264,11 +293,13 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_list) {
+            main_menu.findItem(R.id.action_search).setVisible(true);
             Fragment masternodesListFragment = new MasternodesListFragment();
             changeFragment(masternodesListFragment, null);
         } else if (id == R.id.nav_add_list) {
             buttonAction = false;
             actionButton.setImageResource(R.mipmap.ic_check_black);
+            main_menu.findItem(R.id.action_search).setVisible(true);
             Fragment masternodesAddListFragment = new MasternodesAddListFragment();
             allFragment = masternodesAddListFragment.getClass().getName();
             changeFragment(masternodesAddListFragment, null);
@@ -283,7 +314,7 @@ public class HomeActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
     }
 
     @Override
@@ -294,6 +325,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(Masternode item) {
         item_search.collapseActionView();
+        main_menu.findItem(R.id.action_search).setVisible(false);
         Fragment masternodeInfoFragment = new MasternodeInformationFragment();
         infoFragment = masternodeInfoFragment.getClass().getName();
         changeFragment(masternodeInfoFragment, item);
@@ -326,7 +358,6 @@ public class HomeActivity extends AppCompatActivity
 
     public void setSearchToolbar() {
         searchToolbar = findViewById(R.id.search_toolbar);
-
         if (searchToolbar != null) {
             searchToolbar.inflateMenu(R.menu.menu_search);
             search_menu = searchToolbar.getMenu();
@@ -469,8 +500,6 @@ public class HomeActivity extends AppCompatActivity
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan("", regularFont), 0, mNewTitle.length(),
                 Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        //mNewTitle.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER),
-        // 0, mNewTitle.length(), 0); Use this if you want to center the items
         mi.setTitle(mNewTitle);
     }
 
@@ -495,4 +524,6 @@ public class HomeActivity extends AppCompatActivity
         Intent intent = new Intent(getApplicationContext(), PasscodeActivity.class);
         startActivity(intent);
     }
+
+
 }

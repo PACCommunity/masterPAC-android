@@ -14,12 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.pac.masternodeapp.Controller.DataParser;
 import com.pac.masternodeapp.Controller.RequestController;
 import com.pac.masternodeapp.Controller.SQLiteHandler;
+import com.pac.masternodeapp.Helpers.NotificationHelper;
 import com.pac.masternodeapp.Model.Masternode;
 import com.pac.masternodeapp.Model.SocketCallback;
 import com.pac.masternodeapp.R;
@@ -32,6 +33,10 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.pac.masternodeapp.Model.Constants.MASTERNODES_LIST;
+
+/**
+ * Created by PACcoin Team on 3/14/2018.
+ */
 
 public class MasternodesAddListFragment extends Fragment {
 
@@ -46,6 +51,7 @@ public class MasternodesAddListFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
+
     public MasternodesAddListFragment() {
     }
 
@@ -66,6 +72,7 @@ public class MasternodesAddListFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
     }
 
     @Override
@@ -100,20 +107,21 @@ public class MasternodesAddListFragment extends Fragment {
         }
 
         progressBar.setVisibility(View.VISIBLE);
-        if (checkConnection()){
-            getAllMaternodes();
-        }
-        else{
+        if (checkConnection()) {
+            getAllMasternodes();
+        } else {
             progressBar.setVisibility(View.GONE);
             Snackbar.make(getActivity().findViewById(R.id.home_action_button), getResources().getString(R.string.mn_get_list_error), Snackbar.LENGTH_LONG).show();
         }
 
         return view;
     }
-
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
+        HomeActivity.visibleSearch = true;
+        Log.d("BE4 CRASH", "It gonna crash");
+        HomeActivity.main_menu.findItem(R.id.action_search).setVisible(true);
         HomeActivity.buttonAction = false;
         HomeActivity.actionButton.setImageResource(R.mipmap.ic_check_black);
         HomeActivity.actionButton.show();
@@ -123,8 +131,9 @@ public class MasternodesAddListFragment extends Fragment {
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
+        HomeActivity.visibleSearch = false;
     }
 
     @Override
@@ -137,26 +146,26 @@ public class MasternodesAddListFragment extends Fragment {
         super.onDetach();
     }
 
-    private boolean checkConnection(){
+    private boolean checkConnection() {
         ConnectivityManager ConnectionManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = ConnectionManager.getActiveNetworkInfo();
-        if(networkInfo != null && networkInfo.isConnected()==true )
+        if (networkInfo != null && networkInfo.isConnected() == true)
             return true;
         else
             return false;
     }
 
-    public static void Search(String query){
+    public static void Search(String query) {
         recyclerViewAdapter.FilterData(query);
         recyclerViewAdapter.notifyDataSetChanged();
     }
 
-    public static void Reset(){
+    public static void Reset() {
         recyclerViewAdapter.RestoreData();
         recyclerViewAdapter.notifyDataSetChanged();
     }
 
-    private void getAllMaternodes() {
+    private void getAllMasternodes() {
         RequestController requestController = new RequestController(new SocketCallback() {
             @Override
             public void onCallResponse(String response) {
@@ -165,7 +174,10 @@ public class MasternodesAddListFragment extends Fragment {
                 try {
                     JSONObject masternodesJson = new JSONObject(response);
                     JSONArray mnArray = masternodesJson.getJSONArray("result");
-                    populateUI((List<Masternode>) dataParser.GetMasternodeList(mnArray));
+                    if (mnArray == null || mnArray.length() == 0)
+                        Snackbar.make(getActivity().findViewById(R.id.home_action_button), getResources().getString(R.string.mn_get_list_error), Snackbar.LENGTH_LONG).show();
+                    else
+                        PopulateUI((List<Masternode>) dataParser.GetMasternodeList(mnArray));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -175,7 +187,7 @@ public class MasternodesAddListFragment extends Fragment {
         requestController.execute(MASTERNODES_LIST);
     }
 
-    private void populateUI(List<Masternode> masternodesList){
+    private void PopulateUI(List<Masternode> masternodesList) {
         if (!this.isVisible())
             return;
         else if (masternodesList.isEmpty()) {
@@ -183,6 +195,8 @@ public class MasternodesAddListFragment extends Fragment {
             return;
         }
         SQLiteHandler sqLiteHandler = new SQLiteHandler(getContext());
+        sqLiteHandler.updateMasternodeCount(masternodesList.size());
+
         List<Masternode> dbMasternodes = sqLiteHandler.getMasternodes();
         if (!dbMasternodes.isEmpty()) {
             for (int i = 0; i < dbMasternodes.size(); i++) {

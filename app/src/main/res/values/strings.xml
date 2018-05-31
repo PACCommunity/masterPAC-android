@@ -24,6 +24,19 @@
     <string name="mn_passcode_try_again">Try Again</string>
     <string name="mn_passcode_enter_pin">Enter PIN</string>
 
+    <!-- Masternode Fingerprint dialog screen -->
+    <string name="mn_fingerprint_title">Login</string>
+    <string name="mn_fingerprint_message">Confirm fingerprint to continue</string>
+    <string name="mn_fingerprint_waiting">Touch sensor</string>
+    <string name="mn_fingerprint_success">Fingerprint recognized</string>
+    <string name="mn_fingerprint_failed">Fingerprint not recognized. Try again.</string>
+    <string name="mn_fingerprint_error">Finger must cover the entire sensor.</string>
+    <string name="mn_fingerprint_cancel">Cancel</string>
+
+    <!-- Masternode Notification message -->
+    <string name="mn_notification_title">Payments</string>
+    <string name="mn_notification_message">You have masternodes in the payment list.</string>
+
     <!-- List Masternodes screen -->
     <string name="mn_list_menu_lock">Lock</string>
     <string name="mn_list_menu_masternodes">Masternodes</string>
@@ -44,6 +57,7 @@
     <string name="mn_information_title_current_balance">Current balance:</string>
     <string name="mn_information_button_remove">Remove Masternode</string>
     <string name="mn_information_edit_alias">Masternode Alias</string>
+    <string name="mn_information_last_updated">Last updated: %1$s</string>
 
     <!-- Add Masternode List Screen -->
     <string name="mn_list_add_filter">Filter by IP or TXID</string>
@@ -65,6 +79,7 @@
     <string name="mn_settings_reset_passcode">Reset passcode</string>
     <string name="mn_settings_category_title">Security</string>
     <string name="mn_settings_use_passcode">Use Passcode</string>
+    <string name="mn_settings_use_fingerprint">Login with Fingerprint</string>
     <string name="mn_settings_security_set_passcode">Set passcode</string>
     <string name="mn_settings_security_change_passcode">Change passcode</string>
     <!--<string name="mn_settings_passcode_active"></string>-->
@@ -72,7 +87,7 @@
 
     <!-- Masternode About Screen -->
     <string name="mn_about_app_version">App version</string>
-    <string name="mn_about_app_version_number">1.3</string>
+    <string name="mn_about_app_version_number">2.0.1</string>
     <!--<string name="mn_about_app_web_page">https://paccoin.net/</string>-->
     <string name="mn_about_app_web_page_link">paccoin.net</string>
     <string name="mn_about_app_web_page"> <a href="https://paccoin.net">$PAC Website:</a></string>
@@ -114,6 +129,7 @@
 
     <!--Error messages-->
     <string name="mn_get_list_error">There was problem fetching the Masternode List.</string>
+    <string name="mn_get_info_error">There was problem fetching the Masternode Information.</string>
     <string name="mn_get_list_error_empty">No masternodes added.</string>
     <string name="mns_add_error">Error adding masternodes. Try again later.</string>
     <string name="mn_add_error">Error adding masternode. Try again later.</string>

@@ -16,6 +16,10 @@ import com.pac.masternodeapp.R;
 
 import java.util.List;
 
+/**
+ * Created by PACcoin Team on 3/14/2018.
+ */
+
 public class MasternodesAddAliasListRecyclerViewAdapter extends RecyclerView.Adapter<MasternodesAddAliasListRecyclerViewAdapter.ViewHolder> {
 
     private static List<Masternode> mValues;
@@ -28,7 +32,7 @@ public class MasternodesAddAliasListRecyclerViewAdapter extends RecyclerView.Ada
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_masternodes_add_alias_item, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, new MyCustomEditTextListener());
     }
 
     @Override
@@ -36,22 +40,8 @@ public class MasternodesAddAliasListRecyclerViewAdapter extends RecyclerView.Ada
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).getIp());
 
-        holder.mContentView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mValues.get(position).setAlias(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+        holder.myCustomEditTextListener.updatePosition(holder.getAdapterPosition());
+        holder.mContentView.setText(mValues.get(holder.getAdapterPosition()).getAlias());
     }
 
     @Override
@@ -66,11 +56,15 @@ public class MasternodesAddAliasListRecyclerViewAdapter extends RecyclerView.Ada
         public Masternode mItem;
         public RelativeLayout viewBackground, viewForeground;
 
-        public ViewHolder(View view) {
+        public MyCustomEditTextListener myCustomEditTextListener;
+
+        public ViewHolder(View view, MyCustomEditTextListener myCustomEditTextListener) {
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.ip_alias);
+            this.myCustomEditTextListener = myCustomEditTextListener;
             mContentView = (EditText) view.findViewById(R.id.add_alias);
+            mContentView.addTextChangedListener(myCustomEditTextListener);
             viewBackground = view.findViewById(R.id.view_background);
             viewForeground = view.findViewById(R.id.view_foreground);
         }
@@ -102,4 +96,28 @@ public class MasternodesAddAliasListRecyclerViewAdapter extends RecyclerView.Ada
         notifyDataSetChanged();
     }
 
+    private class MyCustomEditTextListener implements TextWatcher {
+        private int position;
+
+        public void updatePosition(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            // no op
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            if (charSequence.length() != 0) {
+                mValues.get(position).setAlias(charSequence.toString());
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    }
 }

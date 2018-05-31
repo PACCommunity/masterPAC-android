@@ -3,6 +3,10 @@ package com.pac.masternodeapp.View;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,15 +16,27 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.pac.masternodeapp.Controller.SQLiteHandler;
+import com.pac.masternodeapp.Model.CustomFingerprintCallback;
 import com.pac.masternodeapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-public class PasscodeActivity extends AppCompatActivity {
+import me.aflak.libraries.callback.FingerprintCallback;
+import me.aflak.libraries.callback.FingerprintDialogCallback;
+import me.aflak.libraries.dialog.DialogAnimation;
+import me.aflak.libraries.dialog.FingerprintDialog;
+
+/**
+ * Created by PACcoin Team on 3/14/2018.
+ */
+
+public class PasscodeActivity extends AppCompatActivity implements CustomFingerprintCallback {
     List<ImageView> imageViewList;
     int passcodeCount = 0;
     String passcode = "";
@@ -152,6 +168,21 @@ public class PasscodeActivity extends AppCompatActivity {
                     }
                 }
             });
+
+            //active_fingerprint
+            Boolean fingerprintPref = preferences.getBoolean("active_fingerprint", false);
+
+            if (fingerprintPref){
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+                if (prev != null)
+                    ft.remove(prev);
+                ft.addToBackStack(null);
+
+                DialogFragment customFingerprintDialog = CustomFingerprintDialog.newInstance(this);
+                customFingerprintDialog.show(ft, "dialog");
+            }
+
         } else {
             switchActivity();
         }
@@ -218,11 +249,12 @@ public class PasscodeActivity extends AppCompatActivity {
                         passcodeCount = 0;
                         passcode = "";
                     }
+
+                    circleLayout.startAnimation(
+                    AnimationUtils.loadAnimation(PasscodeActivity.this, R.anim.shake_animation));
+                    showMessage();
                 }
             }, 250);
-            circleLayout.startAnimation(
-                    AnimationUtils.loadAnimation(this, R.anim.shake_animation));
-            showMessage();
         }
     }
 
@@ -230,4 +262,8 @@ public class PasscodeActivity extends AppCompatActivity {
         passcodeTxt.setText(R.string.passcode_error);
     }
 
+    @Override
+    public void onSuccess() {
+        switchActivity();
+    }
 }

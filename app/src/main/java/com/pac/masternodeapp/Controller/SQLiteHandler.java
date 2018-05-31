@@ -9,11 +9,15 @@ import com.pac.masternodeapp.Model.Masternode;
 import com.pac.masternodeapp.Model.MasternodeReader;
 import com.pac.masternodeapp.Model.SQLiteModel;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.SimpleTimeZone;
 
 /**
- * Created by LazyDude9202 Magno6058 on 3/20/2018.
+ * Created by PACcoin Team on 3/14/2018.
  */
 
 public class SQLiteHandler {
@@ -28,19 +32,40 @@ public class SQLiteHandler {
     public long addMasternode(Masternode mn) {
         SQLiteModel sqLiteModel = new SQLiteModel(context);
         SQLiteDatabase db = sqLiteModel.getWritableDatabase();
+        int totalMNCount = getMasternodeCount();
+
         ContentValues values = new ContentValues();
-        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_VIN, mn.getVin());
-        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_STATUS, mn.getStatus());
-        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_RANK, mn.getRank());
-        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_IP_ADDRESS, mn.getIp());
-        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_PROTOCOL, mn.getProtocol());
-        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_PAYEE, mn.getPayee());
-        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_ACTIVE_SECONDS, mn.getActiveseconds());
-        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_LAST_SEEN, mn.getLastseen());
-        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_REWARD_STATUS, mn.getRewardStatus());
-        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_ALIAS, mn.getAlias());
-        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_TOTAL_REWARDS, mn.getBalance());
-        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_IS_CHECKED, mn.getIsChecked());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_VIN,
+                mn.getVin());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_STATUS,
+                mn.getStatus());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_RANK,
+                mn.getRank());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_IP_ADDRESS,
+                mn.getIp());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_PROTOCOL,
+                mn.getProtocol());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_PAYEE,
+                mn.getPayee());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_ACTIVE_SECONDS,
+                mn.getActiveseconds());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_LAST_SEEN,
+                mn.getLastseen());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_REWARD_STATUS,
+                mn.getRewardStatus());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_ALIAS,
+                mn.getAlias());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_TOTAL_REWARDS,
+                mn.getBalance());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_IS_CHECKED,
+                mn.getIsChecked());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_LAST_UPDATED,
+                getDate());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_IN_PAYMENT_QUEUE,
+                inPaymentQueue(mn.getRank(), totalMNCount));
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_IN_PAYMENT_QUEUE_NOTIFICATION,
+                false);
+
 
         long insertedRows = db.insert(MasternodeReader.MasternodeEntry.TABLE_NAME,
                 null, values);
@@ -53,6 +78,8 @@ public class SQLiteHandler {
         long insertedRows = 0;
         SQLiteModel sqLiteModel = new SQLiteModel(context);
         SQLiteDatabase db = sqLiteModel.getWritableDatabase();
+
+        int totalMNCount = getMasternodeCount();
 
         for (int i = 0; i < mnList.size(); i++) {
             Masternode mn = mnList.get(i);
@@ -69,6 +96,13 @@ public class SQLiteHandler {
             values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_ALIAS, mn.getAlias());
             values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_TOTAL_REWARDS, mn.getBalance());
             values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_IS_CHECKED, mn.getIsChecked());
+            values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_LAST_UPDATED, getDate());
+
+
+            values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_IN_PAYMENT_QUEUE,
+                    inPaymentQueue(mn.getRank(), totalMNCount));
+            values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_IN_PAYMENT_QUEUE_NOTIFICATION,
+                    false);
 
             insertedRows = db.insert(MasternodeReader.MasternodeEntry.TABLE_NAME,
                     null, values);
@@ -97,6 +131,7 @@ public class SQLiteHandler {
         SQLiteModel sqLiteModel = new SQLiteModel(context);
         SQLiteDatabase db = sqLiteModel.getReadableDatabase();
         List<Masternode> mnList = new ArrayList<>();
+
 //        String sortOrder = MasternodeReader.MasternodeEntry.COLUMN_NAME_ALIAS;
 
         Cursor cursor = db.query(
@@ -132,9 +167,23 @@ public class SQLiteHandler {
             masternode.setBalance(cursor.getDouble(
                     cursor.getColumnIndex(
                             MasternodeReader.MasternodeEntry.COLUMN_NAME_TOTAL_REWARDS)));
+            masternode.setLastUpdated(cursor.getString(
+                    cursor.getColumnIndex(
+                            MasternodeReader.MasternodeEntry.COLUMN_NAME_LAST_UPDATED)));
+
+            boolean inPaymentQueue = cursor.getInt(cursor.getColumnIndex(
+                    MasternodeReader.MasternodeEntry.COLUMN_NAME_IN_PAYMENT_QUEUE)) > 0;
+
+            masternode.setInPaymentQueue(inPaymentQueue);
+
+            boolean inPaymentQueueNotification = cursor.getInt(cursor.getColumnIndex(
+                    MasternodeReader.MasternodeEntry.COLUMN_NAME_IN_PAYMENT_QUEUE_NOTIFICATION)) > 0;
+
+            masternode.setInPaymentQueueNotification(inPaymentQueueNotification);
 
             boolean isChecked = cursor.getInt(cursor.getColumnIndex(
                     MasternodeReader.MasternodeEntry.COLUMN_NAME_IS_CHECKED)) > 0;
+
             masternode.setIsChecked(isChecked);
             mnList.add(masternode);
         }
@@ -146,10 +195,12 @@ public class SQLiteHandler {
 
     /*Updates masternode entry*/
     public int updateMasternode(Masternode newMasternode) {
+
         SQLiteModel sqLiteModel = new SQLiteModel(context);
         SQLiteDatabase db = sqLiteModel.getReadableDatabase();
         ContentValues values = new ContentValues();
         String payee = newMasternode.getPayee();
+        int totalMNCount = getMasternodeCount();
 
         values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_VIN,
                 newMasternode.getVin());
@@ -173,6 +224,14 @@ public class SQLiteHandler {
                 newMasternode.getBalance());
         values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_IS_CHECKED,
                 newMasternode.getIsChecked());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_LAST_UPDATED,
+                getDate());
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_IN_PAYMENT_QUEUE,
+                inPaymentQueue(newMasternode.getRank(), totalMNCount));
+        values.put(MasternodeReader.MasternodeEntry.COLUMN_NAME_IN_PAYMENT_QUEUE_NOTIFICATION,
+                newMasternode.isInPaymentQueueNotification());
+
+
 
         String selection = MasternodeReader.MasternodeEntry.COLUMN_NAME_PAYEE + " LIKE ?";
         String[] whereArgs = {payee};
@@ -255,5 +314,49 @@ public class SQLiteHandler {
         return verification;
     }
 
+    private String getDate() {
+        SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        return dateTimeFormatter.format(date);
+    }
 
+    private boolean inPaymentQueue(int mnRank, int totalMN) {
+        Payments payments = new Payments();
+        return payments.inPaymentQueue(totalMN, mnRank);
+    }
+
+    public void updateMasternodeCount(int totalMN) {
+        SQLiteModel sqLiteModel = new SQLiteModel(context);
+        SQLiteDatabase db = sqLiteModel.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        db.execSQL("DELETE FROM " + MasternodeReader.NetworkEntry.TABLE_NAME);
+        values.put(MasternodeReader.NetworkEntry.COLUMN_NAME_TOTAL_MASTERNODES, totalMN);
+        db.insert(MasternodeReader.NetworkEntry.TABLE_NAME,
+                null, values);
+
+        sqLiteModel.close();
+
+    }
+
+    private int getMasternodeCount() {
+        SQLiteModel sqLiteModel = new SQLiteModel(context);
+        SQLiteDatabase db = sqLiteModel.getReadableDatabase();
+        Cursor cursor = db.query(
+                MasternodeReader.NetworkEntry.TABLE_NAME, null, null,
+                null, null, null, null);
+        int totalMN = 0;
+        while (cursor.moveToNext()) {
+            totalMN = cursor.getInt(cursor.getColumnIndex(
+                    MasternodeReader.NetworkEntry.COLUMN_NAME_TOTAL_MASTERNODES));
+        }
+
+        cursor.close();
+        sqLiteModel.close();
+
+        return totalMN;
+    }
+
+    public void updateMasternodePaymentQueueNotification() {
+
+    }
 }

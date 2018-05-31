@@ -1,6 +1,7 @@
 package com.pac.masternodeapp.View;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -24,6 +25,7 @@ import com.pac.masternodeapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MasternodePasscodeFragment extends Fragment {
 
@@ -154,7 +156,7 @@ public class MasternodePasscodeFragment extends Fragment {
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!passcodeFlag) {
+                if (passcodeFlag) {
                     if (passcodeCount >= 1) {
                         passcodeCount--;
                         passcode = passcode.substring(0, passcode.length() - 1);
@@ -188,6 +190,7 @@ public class MasternodePasscodeFragment extends Fragment {
         return passcodeView;
     }
 
+    boolean canContinue = false;
     private void switchImage(View v) {
         int passcodeLength = 6;
         if (passcodeFlag) {
@@ -228,12 +231,24 @@ public class MasternodePasscodeFragment extends Fragment {
                 passcodeCount++;
             }
             if (passcodeCount == passcodeLength) {
+                resetImage();
                 passcodeFlag = false;
                 txtPin.setText(R.string.passcode_confirm_passcode);
                 passcodeCount++;
-                resetImage();
+
+
+                timeHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        canContinue = true;
+                    }
+                }, 250);
             }
         } else {
+            if (canContinue == false) {
+                return;
+            }
+
             if (confPasscodeCount < passcodeLength) {
                 imageViewList.get(confPasscodeCount).setImageResource(R.mipmap.ic_circle_yellow);
                 switch (v.getId()) {
@@ -355,6 +370,12 @@ public class MasternodePasscodeFragment extends Fragment {
 
     private Boolean confPasscode(String passcode, String confPasscode) {
         return passcode.equals(confPasscode);
+    }
+
+    public void onStart() {
+        super.onStart();
+        HomeActivity.main_menu.findItem(R.id.action_search).setVisible(false);
+        HomeActivity.actionButton.hide();
     }
 
     @Override
