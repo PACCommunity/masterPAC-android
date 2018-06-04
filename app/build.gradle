@@ -4,11 +4,16 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.pac.masternodeapp"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 26
-        versionCode 9
+        versionCode 10
         versionName '2.0.1'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                onesignal_app_id: '5f74943d-7279-4fa0-a75f-4dd9892ecb1d',
+                // Project number pulled from dashboard, local value is ignored.
+                onesignal_google_project_number: 'REMOTE'
+        ]
     }
     buildTypes {
         release {
@@ -31,6 +36,13 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.5.2'
     implementation 'com.android.support:support-v4:26.1.0'
     implementation 'me.aflak.libraries:fingerprint:2.5.2'
+    implementation 'com.onesignal:OneSignal:[3.9.1, 3.99.99]'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.0.2'
+    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
