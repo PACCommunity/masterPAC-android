@@ -12,7 +12,6 @@ import com.pac.masternodeapp.Model.CustomFingerprintCallback;
 import com.pac.masternodeapp.R;
 
 import me.aflak.libraries.callback.FingerprintCallback;
-import me.aflak.libraries.callback.FingerprintDialogCallback;
 import me.aflak.libraries.view.Fingerprint;
 
 public class CustomFingerprintDialog extends DialogFragment implements FingerprintCallback {

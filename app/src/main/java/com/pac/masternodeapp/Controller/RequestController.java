@@ -17,6 +17,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by PACcoin Team on 3/14/2018.
@@ -26,8 +29,14 @@ public class RequestController extends AsyncTask<String, Void, String> {
 
     private SocketCallback listener;
 
+    List<String> serverList;
+
     public RequestController(SocketCallback listener) {
         this.listener = listener;
+
+        serverList = new ArrayList<>();
+        serverList.add(Constants.SERVER_URL_1);
+        serverList.add(Constants.SERVER_URL_2);
     }
 
     public String SocketRequest(String method) {
@@ -40,13 +49,16 @@ public class RequestController extends AsyncTask<String, Void, String> {
 
         try {
 
-            Socket socket = createSocket(Constants.SERVER_URL_1, 50001);
+            String serverUrl = serverList.get(getServerNumber(1, 0));
+            serverList.remove(serverUrl);
+            Socket socket = createSocket(serverUrl, 50001);
             if (socket  != null && socket.isConnected()) {
                 String request = BuildMethod(method);
 
                 return getRequest(socket, request);
             } else {
-                socket = createSocket(Constants.SERVER_URL_2, 50001);
+                String backupServer = serverList.get(0);
+                socket = createSocket(backupServer, 50001);
 
                 if (socket != null && socket.isConnected()) {
                     String request = BuildMethod(method);
@@ -63,6 +75,12 @@ public class RequestController extends AsyncTask<String, Void, String> {
         }
 
         return "";
+    }
+
+    private int getServerNumber(int max, int min) {
+        Random rand = new Random();
+
+        return rand.nextInt((max - min) + 1) + min;
     }
 
     String getRequest(Socket socket, String request) {
